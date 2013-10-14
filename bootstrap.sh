@@ -123,7 +123,7 @@ setup_vundle() {
 }
 
 setup_git_user() {
-    msg "이름과 이메일을 설정합니다."
+    msg "git 저장소에서 사용할 이름과 이메일을 설정합니다."
     echo
     echo -n " - 이  름: "
     read name
