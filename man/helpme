@@ -1,0 +1,256 @@
+###################################################################################
+#
+#        TITLE
+#                git helpme - 자주 쓰는 명령어 도움말
+#
+#        LINK
+#                - [A Visual Git Reference](http://marklodato.github.io/visual-git-guide/index-ko.html)
+#
+###################################################################################
+
+        NAME
+                git-add - 스테이징 영역에 파일을 등록한다
+
+        SYSNOPSIS
+
+                git add [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
+                         [--edit | -e] [--all | [--update | -u]] [--intent-to-add | -N]
+                         [--refresh] [--ignore-errors] [--ignore-missing] [--]
+                         [<filepattern>...]
+
+        EXAMPLE
+
+                $ git add .                   (1) 현재 디렉토리부터 재귀적으로 모든 파일을 스테이징 (관리되지 않는 파일 포함)
+                $ git add *.cpp               (2) 현재 디렉토리부터 재귀적으로 *.cpp 파일을 스테이징
+                $ git add foo.cpp             (3) foo.cpp 스테이징
+
+                $ git reset -- foo.cpp        (4) foo.cpp 언스테이징
+
+###################################################################################
+
+        NAME
+                git-rm - 파일을 삭제한 후 스테이징영역에 등록한다
+
+        SYSNOPSIS
+                git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
+
+        EXAMPLE
+                $ git rm foo.cpp              (1) foo.cpp 삭제
+                $ git rm -f *.cpp             (2) foo.cpp 삭제. 경고 무시
+                $ git rm -r dir/              (3) 디렉토리 삭제
+                $ git rm --cached foo.cpp     (4) 작업사본은 그대로 두고 스테이징영역에 삭제등록한다.
+
+###################################################################################
+
+        NAME
+                git-mv - 파일 이동
+
+        SYSNOPSIS
+                git mv [-v] [-f] [-n] [-k] <source> <destination>
+                git mv [-v] [-f] [-n] [-k] <source> ... <destination directory>
+
+        EXAMPLE
+                $ git mv foo.cpp bar.cpp            (1) 파일명 변경
+                $ git mv foo1.cpp foo2.cpp dir/     (2) 파일을 디렉토리로 이동
+
+###################################################################################
+
+        NAME
+                git-checkout - 작업 공간에 브랜치나 경로를 checkout한다
+
+        SYSNOPSIS
+                git checkout [-q] [-f] [-m] [<branch>]
+                git checkout [-q] [-f] [-m] [--detach] [<commit>]
+                git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+                git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+                git checkout [-p|--patch] [<tree-ish>] [--] [<paths>...]
+
+        EXAMPLE
+                1. 다음은 작업공간을 master브랜치로 전환하고, 특정 파일을 두 리비전 되돌리고, 실수로 삭제한 다음
+                   복구시키는 과정이다.
+
+                        $ git checkout master                 (1)
+                        $ git checkout master~2 foo.cpp       (2)
+                        $ rm foo.cpp                         
+                        $ git checkout foo.cpp                (3)
+
+                        1) branch 전환
+                        2) 다른 커밋에서 파일을 꺼낸다.
+                        3) 저장소에서 실수로 지운 파일을 복구시킨다.
+
+                      우연히도 foo.cpp 브랜치가 존재한다면 파일을 복구시키지 않고 브랜치 이동을 할 것이다.
+                      이 경우에는 --를 써서 파일이라는 것을 명시해 주어야 한다.
+
+                        $ git checkout -- foo.cpp
+
+
+                2. 만약 의도하지 않은 다른 브랜치에서 작업을 했다면, 올바른 브랜치로 돌아갈 수 있다.
+
+                        $ git checkout mytopic
+
+                      하지만 불행히도 작업했던 파일이 "wrong" 브랜치와 "mytopic" 브랜치에서 다르다면, 위 명령은
+                      다음과 같이 에러가 발생할 것이다.
+
+                        $ git checkout mytopic
+                        error: You have local changes to 'frotz'; not switching branches.
+
+                      이 경우 '-m' 옵션을 주어 실행하면, 3-way-merge를 시도할 것이다.
+
+                        $ git checkout -m mytopic
+                        Auto-merging frotz
+
+                      3-way-merge 를 하고나면 Stage(Index)에 자동으로 등록되지 않는다. 따라서 diff명령으로 변경된 부분을
+                      확인할 수 있다.
+
+
+                3. '-m' 옵션으로 브랜치를 전환하다가 이렇게 충돌이 발생하는 경우도 있다.
+
+                        $ git checkout -m mytopic
+                        Auto-merging frotz
+                        ERROR: Merge conflict in frotz
+                        fatal: merge program failed
+
+                      이 경우 status에 Unmerged상태로 표시된다. `git mergetool`로 병합하거나 editor를 열어 손수 고쳐야한다.
+                      그리고나서 git add명령으로 merge가 끝났다고 표시한다:
+
+                        $ edit frotz
+                        $ git add frotz
+
+###################################################################################
+
+        NAME
+                git-branch - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-tag - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-commit - 변경사항을 저장소에 기록한다
+
+        SYSNOPSIS
+                
+                git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
+                           [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
+                           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+                           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+                           [--date=<date>] [--cleanup=<mode>] [--status | --no-status]
+                           [-i | -o] [--] [<file>...]
+
+        EXAMPLE
+
+              1. 기본적인 사용법:
+                $ edit hello.c
+                $ git rm goodbye.c
+                $ git add hello.c
+                $ git commit
+
+              2. Staging(Index)보다 급하게 커밋해야 하는 경우에도 사용할 수 있다. 
+                 이 경우 Staging(Index)의 변경사항은 잃어버리지 않는다:
+                $ edit hello.c hello.h
+                $ git add hello.c hello.h
+                $ edit Makefile
+                $ git commit Makefile
+
+###################################################################################
+
+        NAME
+                git-remote - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-push - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-fetch - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-pull - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+        NAME
+                git-remote - 
+
+        SYSNOPSIS
+                
+        EXAMPLE
+
+###################################################################################
+
+# 브랜치 & 태그
+
+	git branch                        : 브랜치 목록
+	git branch <branch>               : 브랜치 생성
+	git branch -d <branch>            : 브랜치 삭제
+
+	git tag                           : 태그 목록
+	git tag <tag>                     : 태그 생성
+	git tag -d <tag>                  : 태그 삭제
+
+	git merge <branch>                : <branch>를 현재 브랜치로 합치기
+	git merge --abort                 : 병합 중단
+
+# 원격 저장소 
+
+	git remote                        : '원격 저장소' 목록
+	git remote add <name> <주소>      : '원격 저장소' 등록. 첫 remote의 <name>은 origin이다.
+	git remote rm <name>              : '원격 저장소' 삭제 
+	git remote rename <old> <new>     : '원격 저장소' 이름 변경
+	git remote -v                     : '원격 저장소' 주소
+	git ls-remote                     : '원격 저장소' 주소
+
+# 로그
+
+	git ls[a] [since..until] [-N] [paths]   : (alias) 로그 출력
+	git ll[a] [since..until] [-N] [paths]   : (alias) 로그 출력 & 파일목록 출력
+	git lg[a] [since..until] [-N] [paths]   : (alias) 로그 출력 (graph)
+
+		[a]: 모든 브랜치
+		[since..until]: since=오래된 커밋,  until=최신 커밋
+		[-N]: 숫자. 출력할 로그 갯수
+		[paths]: 파일 또는 디렉토리 목록
+
+		예) git ls 
+		예) git ls f303471..HEAD -5
+
+	git diff                      : 관리되는 파일의 변경사항 출력. (대상: 'Staging Area' 밖에 있는 파일)
+	git diff --cached             : 관리되는 파일의 변경사항 출력. (대상: 'Staging Area' 안에 있는 파일)
+	git changes                   : (alias) 관리되는 파일의 파일 목록. diff와 비슷하지만 관리되는 파일 목록만 출력
+
+	git blame  <path>             : 라인별 작성자 확인 (이름)
+	git blame -e <path>           : 라인별 작성자 확인 (email)
+
+

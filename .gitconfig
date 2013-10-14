@@ -1,0 +1,85 @@
+[core]
+	editor = vim
+
+[diff]
+	tool=kdiff3
+
+[difftool]
+	prompt=false
+
+[merge]
+	tool = kdiff3
+
+[mergetool]
+	prompt=false
+
+
+[color]
+	status=auto
+	branch=auto
+	interactive=auto
+	diff=auto
+
+[alias]
+	man="!cat ~/.config-git/man/man | less"
+	helpme="!cat ~/.config-git/man/helpme | less"
+
+	br = branch -vv
+	bm = blame --date=relative
+	bme = blame --date=relative -e
+	ci = commit
+	co = checkout
+	st = status
+	visual = !gitk
+	last = log -1 HEAD
+
+	# 커밋 대기목록에서 제외
+	unstage = reset HEAD --
+
+	# 커밋 되돌리기
+	undo=reset --hard
+
+	# 로그
+	ls       =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	lsa      =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+	lg       =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --graph
+	lga      =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --graph --all
+	ll       =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --stat
+	lla      =log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --stat --all
+	ls-blame =blame --date=relative
+
+	# pull 이후에 생긴 commit만 출력한다.
+	#	git pull
+	#	git new
+	#	git new origin/master
+	new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+
+	# 바뀐 파일 목록 출력
+	changes=diff --name-status
+
+	# 바뀐 파일들의 양 출력
+	diffstat=diff --stat -r
+	sortdiff = !sh -c 'git diff "$@" | grep "^[+-]" | sort --key=1.2 | uniq -u -s1'
+
+	# recursive 버전
+	rdiff="!bash -c      \"  find . -name .git | sed -n 's/\\.git//gp' > /tmp/.tmp1 &&\n cat /tmp/.tmp1 | while read line \n do echo \\\"Entering directory: \\$line\\\" \n       git --work-tree=\\$line --git-dir=\\$line/.git diff            \n echo \\\"Leaving directory: \\$line\\\" \n echo \n done \""
+	rdiff-stat="!bash -c \"  find . -name .git | sed -n 's/\\.git//gp' > /tmp/.tmp1 &&\n cat /tmp/.tmp1 | while read line \n do echo \\\"Entering directory: \\$line\\\" \n       git --work-tree=\\$line --git-dir=\\$line/.git diff --stat     \n echo \\\"Leaving directory: \\$line\\\" \n echo \n done \""
+	rstatus="!bash -c    \"  find . -name .git | sed -n 's/\\.git//gp' > /tmp/.tmp1 &&\n cat /tmp/.tmp1 | while read line \n do echo \\\"Entering directory: \\$line\\\" \n       git --work-tree=\\$line --git-dir=\\$line/.git status          \n echo \\\"Leaving directory: \\$line\\\" \n echo \n done \""
+	rfetch="!bash -c     \"  find . -name .git | sed -n 's/\\.git//gp' > /tmp/.tmp1 &&\n cat /tmp/.tmp1 | while read line \n do echo \\\"Entering directory: \\$line\\\" \n       git --work-tree=\\$line --git-dir=\\$line/.git fetch           \n echo \\\"Leaving directory: \\$line\\\" \n echo \n done \""
+	rst=!git rstatus
+
+	# 해당 함수의 변경사항만 출력한다.
+	#	funcdiff <old-rev> <new-rev> <path> <function>
+	#	funcdiff HEAD HEAD^ init/main.c start_kernel
+	funcdiff = !sh -c \"git show \\\"\\$0:\\$2\\\" | sed -n \\\"/^[^ \\t].*\\$3[ \\t]*(/,/^}/p\\\" > .tmp1 &&\n        git show \\\"\\$1:\\$2\\\" | sed -n \\\"/^[^ \\t].*\\$3[ \\t]*(/,/^}/p\\\" > .tmp2 &&\n        git diff --no-index .tmp1 .tmp2\"
+
+
+	# 충돌 났을때 보는 용도?
+	gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
+
+
+	# 서버만들기
+	#	`git clone git://127.0.0.1/project-name.git` 명령 사용가능
+	serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+	

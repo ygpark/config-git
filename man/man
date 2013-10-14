@@ -1,0 +1,49 @@
+git helpme: 자주 쓰는 명령어 도움말
+
+# 기본 명령어
+
+	git checkout <branch>                     : 로컬 저장소를 <branch>로 전환
+	git checkout <tag>                        : 로컬 저장소를 <tag>로 전환
+	git checkout <commit>                     : 로컬 저장소를 <commit>로 전환
+	git checkout <paths>...                   : <paths>를 저장소의 내용으로 복구
+	git checkout -b <branch>                  : 브랜치 생성 & 전환
+
+	git add <paths>                           : 스테이징 영역에 등록
+	git rm  <paths>                           : 삭제와 동시에 스테이징 영역에 등록
+	git mv  <paths>                           : 이동과 동시에 스테이징 영역에 등록
+	git unstage <paths>                       : 언스테이징
+
+	git commit                                : 스테이징 영역을 로컬 저장소로 밀어넣기
+	git commit -m "한줄 로그"                 : 스테이징 영역을 로컬 저장소로 밀어넣기
+
+	git push [<repository> [<refspec>...]]    : 원격 저장소로 밀어넣기
+	git pull [<repository> [<refspec>...]]    : 원격 저장소로부터 가져오기
+
+
+# 브랜치 & 태그
+
+	git branch                                : 브랜치 목록
+	git branch <branch>                       : 브랜치 생성
+	git branch -d <branch>                    : 브랜치 삭제
+
+	git tag                                   : 태그 목록
+	git tag <tag>                             : 태그 생성
+	git tag -d <tag>                          : 태그 삭제
+
+	git merge <branch>                        : <branch>를 현재 브랜치로 합치기
+	git merge --abort                         : 병합 중단
+
+
+# 로그
+
+	git ls[a] [since..until] [-N] [paths]     : 로그 출력
+	git ll[a] [since..until] [-N] [paths]     : 로그 출력 & 파일목록 출력
+	git lg[a] [since..until] [-N] [paths]     : 로그 출력 (graph)
+	git bm  <path>                            : 라인별 작성자의 이름  출력 (blame)
+	git bme <path>                            : 라인별 작성자의 email 출력 (blame)
+
+
+# 쉘
+ 
+    gitsh   : git용 프롬프트
+
