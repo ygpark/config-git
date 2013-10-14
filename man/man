@@ -41,9 +41,3 @@ git helpme: 자주 쓰는 명령어 도움말
 	git lg[a] [since..until] [-N] [paths]     : 로그 출력 (graph)
 	git bm  <path>                            : 라인별 작성자의 이름  출력 (blame)
 	git bme <path>                            : 라인별 작성자의 email 출력 (blame)
-
-
-# 쉘
- 
-    gitsh   : git용 프롬프트
-
