@@ -122,6 +122,17 @@ setup_vundle() {
     debug
 }
 
+setup_git_user() {
+    msg "이름과 이메일을 설정합니다."
+    echo
+    echo -n " - 이  름: "
+    read name
+    git config --global user.name "$name"
+    echo -n " - 이메일: "
+    read email
+    git config --global user.email "$email"
+}
+
 ############################ MAIN()
 
 program_exists "git" "To install $app_name you first need to install Git."
@@ -133,6 +144,9 @@ create_symlinks "Setting up vim symlinks"
 do_backup   "Your old git stuff has a suffix now and looks like .gitconfig.`date +%Y%m%d%S`" \
         "$HOME/.gitconfig"
 
+setup_git_user
+
 msg             "\nThanks for installing $app_name."
 msg             "© `date +%Y` http://github.com/ygpark/config-git"
+
 
