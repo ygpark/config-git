@@ -30,6 +30,9 @@
 	ci = commit
 	co = checkout
 	st = status
+	st-no = status -uno
+	st-normal = status -unormal
+	st-all = status -uall
 	visual = !gitk
 	last = log -1 HEAD
 
