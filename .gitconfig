@@ -24,6 +24,9 @@
 	man="!cat ~/.config-git/man/man | less"
 	helpme="!cat ~/.config-git/man/helpme | less"
 
+	merge-noff = merge --no-ff
+	mg = merge --no-ff
+
 	br = branch -vv
 	bm = blame --date=relative
 	bme = blame --date=relative -e
