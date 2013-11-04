@@ -82,4 +82,6 @@
 	#	`git clone git://127.0.0.1/project-name.git` 명령 사용가능
 	serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
 
-	
+[user]
+	name = YoungGi Park
+	email = ghostyak@gmail.com
