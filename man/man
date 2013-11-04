@@ -36,6 +36,13 @@ git helpme: 자주 쓰는 명령어 도움말
         git merge --abort                         : 병합 중단
 
 
+    <상태>
+
+        git st                                    : 상태보기
+        git st-no                                 : 상태보기(Tracked 파일보기)
+        git st-normal                             : 상태보기(Untracked 파일보기)
+        git st-all                                : 상태보기(Untracked 파일 + 디렉토리 내용까지 보기)
+
     <로그>
 
         git ls[a] [since..until] [-N] [paths]     : 로그 출력
