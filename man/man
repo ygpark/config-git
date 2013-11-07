@@ -18,8 +18,16 @@ git helpme: 자주 쓰는 명령어 도움말
         git commit                                : 스테이징 영역을 로컬 저장소로 밀어넣기
         git commit -m "한줄 로그"                 : 스테이징 영역을 로컬 저장소로 밀어넣기
 
-        git push [<repository> [<refspec>...]]    : 원격 저장소로 밀어넣기
+        git push [<repository> [<refspec>...]]    : 원격 저장소로 밀어넣기 (repository는 origin 같은 원격 저장소를 말함)
+            예) 
+                git checkout topic          # topic 브랜치로 간다.
+                #파일을 수정한다.
+                git add ...
+                git commit -m '로그'
+                git push origin topic       # origin/topic 로 local master를 밀어넣는다.
+
         git pull [<repository> [<refspec>...]]    : 원격 저장소로부터 가져오기
+            예) git pull
 
 
     <브랜치 & 태그>
@@ -33,6 +41,10 @@ git helpme: 자주 쓰는 명령어 도움말
         git tag -d <tag>                          : 태그 삭제
 
         git merge <branch>                        : <branch>를 현재 브랜치로 합치기
+            예) 
+                git checkout master                 # master 브랜치로 간다.
+                git merge --no-ff topic             # master 브랜치로 topic를 땡겨온다.
+
         git merge --abort                         : 병합 중단
 
 
