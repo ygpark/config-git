@@ -3,6 +3,12 @@
 app_name='config-git'
 git_uri='https://github.com/ygpark/config-git'
 git_branch='master'
+bashrc_include='_bashrc.sh'
+bashrc='.bashrc'
+# Linux or Darwin?(MAC OS X)
+if ! [ $(uname -a | awk '{print $1}') = "Linux" ];then
+    bashrc='.bash_profile'
+fi
 debug_mode='0'
 fork_maintainer='0'
 
@@ -133,6 +139,26 @@ setup_git_user() {
     git config --global user.email "$email"
 }
 
+setup_bashrc() {
+
+    is_include_exist_in_bashrc=$(grep "source ~/.$app_name/$bashrc_include" $HOME/$bashrc | wc -l)
+    no="0"
+
+    # .bashrc에 추가하기
+    if [ $is_include_exist_in_bashrc = $no ]; then
+        echo "" >> $HOME/$bashrc
+        echo "source ~/.$app_name/$bashrc_include" >> $HOME/$bashrc
+        echo "source ~/.$app_name/$bashrc_include"
+        ret="$?"
+        success "$1"
+        debug
+    else
+        ret="0"
+        success "$1"
+        debug
+    fi
+}
+
 ############################ MAIN()
 
 program_exists "git" "To install $app_name you first need to install Git."
@@ -145,6 +171,8 @@ do_backup   "Your old git stuff has a suffix now and looks like .gitconfig.`date
         "$HOME/.gitconfig"
 
 setup_git_user
+
+setup_bashrc "Successfully setup for '$HOME/$bashrc'"
 
 msg             "\nThanks for installing $app_name."
 msg             "© `date +%Y` http://github.com/ygpark/config-git"
