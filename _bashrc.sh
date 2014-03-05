@@ -60,6 +60,12 @@ function search_cs_f
     search_cs $* | sed -e 's/:.*$//g' | sort -u
 }
 
+function encoding-euckr-utf8
+{
+    iconv -c -f euc-kr -t utf-8 $1 > $1.tmp
+    mv $1.tmp $1
+}
+
 
 
 ###########################################################
