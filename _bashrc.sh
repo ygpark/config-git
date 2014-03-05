@@ -1,20 +1,31 @@
 ###########################################################
+# Variables
+#
+source /usr/share/git-core/contrib/completion/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export CONFIG_GIT_FLAG_PS1=/tmp/config-git.ps1.$(cut -d ' ' -f 4 /proc/self/stat)
+
+
+###########################################################
 # functions
 #
 
 #Brief:
-#Usage:
-function gitf
+#Usage: 
+function git-ps1
 {
-    flag=/tmp/config-git.ps1
-    if [ "$1" = "ps1" ]; then
-        if [ -f "$flag" ];then
-            source $HOME/.config-git/script/ps1-off.sh
-            rm -f $flag
-        else
-            source $HOME/.config-git/script/ps1-on.sh
-            touch $flag
-        fi
+    if [ "$1" = "init" ];then
+        rm -f $CONFIG_GIT_FLAG_PS1
+        return 0;
+    fi
+
+    if ! [ -f "$CONFIG_GIT_FLAG_PS1" ];then
+        export PS1='\[\033[00;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\]$(__git_ps1 " (%s)")\$ '
+        touch $CONFIG_GIT_FLAG_PS1
+    else
+        export PS1='\[\033[00;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\]") \$ '
+        rm -f $CONFIG_GIT_FLAG_PS1
     fi
 }
 
@@ -52,10 +63,8 @@ function search_cs_f
 
 
 ###########################################################
-# PS1 for git
+# MAIN
 #
-source /usr/share/git-core/contrib/completion/git-prompt.sh
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
 
-gitf ps1
+git-ps1 init
+git-ps1
