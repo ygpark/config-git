@@ -62,6 +62,11 @@ function search_cs_f
 
 function encoding-euckr-utf8
 {
+    current=$(file $1 | cut -d ' ' -f 2)
+    if ! [ $current = ISO-8859 ]; then
+        echo "Input file is not euc-kr(ISO-8859)"
+        return 0;
+    fi
     iconv -c -f euc-kr -t utf-8 $1 > $1.tmp
     mv $1.tmp $1
 }
