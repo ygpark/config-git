@@ -24,7 +24,7 @@ function git-ps1
         export PS1='\[\033[00;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\]$(__git_ps1 " (%s)")\$ '
         touch $CONFIG_GIT_FLAG_PS1
     else
-        export PS1='\[\033[00;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\]") \$ '
+        export PS1='\[\033[00;36m\]\u@\h\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\] \$ '
         rm -f $CONFIG_GIT_FLAG_PS1
     fi
 }
