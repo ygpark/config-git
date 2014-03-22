@@ -1,7 +1,9 @@
 ###########################################################
 # Variables
 #
-source /usr/share/git-core/contrib/completion/git-prompt.sh
+if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+    source /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export CONFIG_GIT_FLAG_PS1=/tmp/config-git.ps1.$(cut -d ' ' -f 4 /proc/self/stat)
@@ -58,6 +60,31 @@ function search_cs
 function search_cs_f
 {
     search_cs $* | sed -e 's/:.*$//g' | sort -u
+}
+
+
+#Brief:
+#Usage: search_cs <keyword>
+#Usage: search_cs <dir> <keyword>
+function search_cpp
+{
+    if [ "$1" = "help" ];then
+        echo "Usage:"
+        echo "    search_cpp <keyword>"
+        echo "    search_cpp <dir> <keyword>"
+        return 0;
+    fi
+
+    if [ "$#" = "1" ]; then
+        _search "." ".*\(cpp\|h\)" "$1"
+    elif [ "$#" = "2" ]; then
+        _search "$1" ".*\(cpp\|h\)" "$2"
+    fi
+}
+
+function search_cpp_f
+{
+    search_cpp $* | sed -e 's/:.*$//g' | sort -u
 }
 
 function encoding-euckr-utf8
